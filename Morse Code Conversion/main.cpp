@@ -34,36 +34,21 @@ int main() {
 		string morseTranslation;
 		string morseString;
 
+		cout << " ";
 		for (int i = 0; i < messageLength; i++) {
 			currentChar = toupper(message[i]);
 			int j = 0;
 			while (j < MORSESIZE && currentChar != LETTERMATCH[j]) {
 				j++;
 			}
+
 			morseTranslation = MORSECODE[j];
+			int letterCount = morseTranslation.length() + 1;
+			cout << currentChar << setw(letterCount);
 			morseString = morseString + " " + morseTranslation;
 		}
 		int MORSESTRINGSIZE = morseString.length();
-
-		int currentLetter = 0;
-		int letterCount = 0;
-		for (int i = 0; i < MORSESTRINGSIZE; i++) {
-			currentChar = toupper(message[currentLetter]);
-			if (morseString[i] != ' ') {
-				letterCount++;
-			}
-			else if (morseString[i] == ' ') {
-				cout << setw(letterCount / 2) << currentChar << setw(letterCount / 2);
-				letterCount = 0;
-				currentLetter++;
-			}
-			if (currentLetter == messageLength) {
-				break;
-			}
-		}
-
 		cout << endl << morseString;
-
 
 		char playAgain = 'B';
 		while (playAgain != 'y' && playAgain != 'n') { // while loop ask if players want to play again
