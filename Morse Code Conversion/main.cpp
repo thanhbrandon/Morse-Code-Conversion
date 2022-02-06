@@ -3,6 +3,8 @@
 #include <iomanip>
 using namespace std;
 
+bool reRun();
+
 int main() {
 
 	bool programOn = true;
@@ -26,8 +28,9 @@ int main() {
 		cout << "Please enter message to be converted into Morse Code,\n";
 		cout << "no more than 255 characters in length.\n\n";
 		cout << "ENTER message : ";
-		getline(cin, message);
-
+		cin.ignore();
+		getline(cin, message, '\n');
+		
 		int messageLength = message.length();
 		int foundNum;
 		char currentChar;
@@ -50,21 +53,37 @@ int main() {
 		int MORSESTRINGSIZE = morseString.length();
 		cout << endl << morseString;
 
-		char playAgain = 'B';
-		while (playAgain != 'y' && playAgain != 'n') { // while loop ask if players want to play again
-			cout << "\nWould you like to run the program again? (y/n) ";
-			cin >> playAgain;
-			playAgain = tolower(playAgain);
-			if (playAgain != 'y' && playAgain != 'n') {
-				cout << "Invalid Response!\n";
-			}
-		}
-		if (playAgain == 'n') {
-			programOn = false;
-		}
-
-		system("cls");
+		programOn = reRun();
 	} while (programOn == true);
 
 	return 0;
+}
+
+bool reRun()
+{
+	bool result; 	// true to end program, false to run again
+	char runAgain;	// prompt for re-running program
+
+	// prompt to run program again
+	cout << "\n\nWould you like to run program again (Y/N) ? ";
+	cin >> runAgain;
+
+	// validate input for Y, y, N, or n
+	while (toupper(runAgain) != 'Y' && toupper(runAgain) != 'N')
+	{
+		cout << "\n **  Invalid entry  **  Please enter 'Y' or 'N'\n\n";
+		cout << "Would you like to run program again (Y/N) ? ";
+		cin.ignore();  // clear keybard cache
+		cin >> runAgain;
+	}
+
+	if (toupper(runAgain) == 'Y')
+	{
+		result = true;
+		system("CLS");
+	}
+	else
+		result = false;
+
+	return result;
 }
